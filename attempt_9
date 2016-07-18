@@ -1,0 +1,38 @@
+%Now to implement a selector mechanism for the smoothing length or radius
+%deltatheta(tracer_x,tracer_y);
+
+
+%Anything initialized with _number are constant total numbers
+p_number = 4000; 
+c_number = 40;
+r_number = p_number/c_number;
+
+
+
+	for p = 1:p_number  
+        
+		% Look at end cases if p=40 we want 40 and if p=1 we want 1. 
+		% Since 0 is the neutral element of the modulo operator a linear shift is required.
+		% Row seems to be working somewhat correctly, but a new row does not
+        %always switch after 40 particles.
+        
+        
+        p_f = single(p);                                  %Conversion to floating point type will prevent
+        c_number_f = single(c_number);                    % rounding discontinuities in the future.
+        
+        row(p) = uint8(mod(p_f,c_number_f));
+            if (row(p) == 0)                              %Special boundary case; since we have 40 columns, 
+                row(p) = c_number;                        % mod( n*40, 40) will return 0, but these particles
+                                                          % are our end-of-row particles, so column = 40, not 0.
+            end 
+            
+       % column(p) = mod(p-1,r_number) +1;
+            
+
+		disp 'particle number is =' 
+        disp(p)
+        disp 'row number is ='
+		disp(row(p))
+        %disp 'column number is = '
+	    	%disp(column(p))
+    end
