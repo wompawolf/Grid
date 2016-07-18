@@ -1,0 +1,32 @@
+%Now to implement a selector mechanism for the smoothing length or radius
+%deltatheta(tracer_x,tracer_y);
+
+
+%Anything initialized with _number are constant total numbers
+p_number = 4000; 
+c_number = 40;
+r_number = p_number/c_number;
+
+
+column = zeros(4000);
+row = zeros(4000);
+
+
+	for p = 1:p_number  
+        
+		% Look at end cases if p=40 we want 40 and if p=1 we want 1. 
+		% Since 0 is the neutral element of the modulo operator a linear shift is required.
+		% Row seems to be working somewhat correctly, but a new row does not
+     %always switch after 40 particles.
+        
+        row(p) = floor(mod((p / c_number), c_number)) + 1;   
+        column(p) = mod(p-1,r_number) +1;
+      
+
+		disp 'particle number is =' 
+        disp(p)
+        disp 'row number is ='
+		disp(row(p))
+        disp 'column number is = '
+		disp(column(p))
+    end
